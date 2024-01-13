@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">הורידו סרטונים מרשתות חברתיות</h1>
+        <form id="downloadForm" action="{% url 'downloadMedia' %}" method="post">
+            {% csrf_token %}
+            <input type="text" id="mediaUrl" name="mediaUrl" placeholder="הדבק את כתובת הסרטון">
+            <button type="submit">הורד</button>
+            <span id="detectedPlatform"></span>
+        </form>
+    </div>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {% if message.tags %}
+                    <li {% if message.tags %} role="alert" class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
