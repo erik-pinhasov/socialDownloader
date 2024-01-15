@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -71,7 +72,10 @@ TEMPLATES = [
     },
 ]
 WSGI_APPLICATION = 'socialDownloader.wsgi.application'
+FFMPEG_DIR = BASE_DIR / 'mediaDownloaders'
 
+# Add FFMPEG_DIR to the system PATH
+os.environ['PATH'] += os.pathsep + str(FFMPEG_DIR)
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
