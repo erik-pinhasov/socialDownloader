@@ -24,7 +24,7 @@ def findVideoUrl(jsonData):
 
 def findVideoName(content):
     meta_tag = content.find('meta', attrs={'name': 'description'})
-    return meta_tag.get('content') if meta_tag else 'FacebookVideo'
+    return formatVideoName(meta_tag.get('content')) if meta_tag else 'FacebookVideo'
 
 
 def maxResVideo(content):
@@ -37,6 +37,7 @@ def maxResVideo(content):
         except Exception as e:
             continue
     return None, None
+
 
 def downloadFacebookVideo(url):
     try:

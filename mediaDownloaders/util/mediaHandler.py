@@ -49,3 +49,7 @@ def getPageContent(url):
         content = page.content()
         browser.close()
         return bs4.BeautifulSoup(content, 'html.parser')
+
+
+def formatVideoName(name):
+    return "".join(x if x.isalnum() or x in (" ", ".", "-") else "" for x in name)
