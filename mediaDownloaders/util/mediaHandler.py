@@ -5,6 +5,8 @@ import requests
 from moviepy.editor import VideoFileClip, AudioFileClip
 from playwright.sync_api import sync_playwright
 
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+
 
 def getTempPath(fileName):
     tempDir = tempfile.gettempdir()
@@ -44,7 +46,7 @@ def combineVideoAudio(videoPath, audioPath, videoName):
 def getPageContent(url):
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
-        page = browser.new_context().new_page()
+        page = browser.new_context(user_agent=USER_AGENT).new_page()
         page.goto(url)
         content = page.content()
         browser.close()
