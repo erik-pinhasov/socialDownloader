@@ -1,4 +1,3 @@
-import json
 from mediaDownloaders.util.mediaHandler import *
 
 
@@ -8,10 +7,7 @@ def extractVideoName(text):
 
 def getMaxQualityVideo(url):
     try:
-        streamContent = getStreamRequest(url)
-        soup = getBeautifulSoup(streamContent)
-        scriptTag = soup.find('script', type='application/ld+json')
-        jsonData = json.loads(scriptTag.text.strip())
+        jsonData = getScriptJson(url, 'application/ld+json')
         videoObj = jsonData['video']['contentUrl']
         videoName = extractVideoName(jsonData['video']['description'])
         return videoObj, videoName

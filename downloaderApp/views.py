@@ -22,8 +22,8 @@ def downloadMediaView(request):
     file_path = downloader(media_url)
 
     if file_path and os.path.exists(file_path):
-        response = CleanUpFileResponse(open(file_path, 'rb'), as_attachment=True, filename=os.path.basename(file_path),
-                                       file_path=file_path)
+        response = CleanUpFileResponse(open(file_path, 'rb'), as_attachment=True,
+                                       filename=os.path.basename(file_path), file_path=file_path)
         return response
     else:
         messages.error(request, "Error, download failed.")

@@ -45,6 +45,6 @@ def extractVideoName(text):
 
 
 def downloadTwitterVideo(url):
-    videoID = extractVideoID(url, r'/status/(\d+)')
+    videoID = extractTextPattern(url, r'/status/(\d+)')
     videoObj, videoName = getMaxQualityVideo(videoID)
     return downloadTempFile(videoObj, videoName)

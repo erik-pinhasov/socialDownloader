@@ -1,4 +1,3 @@
-import json
 from mediaDownloaders.util.mediaHandler import *
 
 
@@ -40,16 +39,10 @@ def downloadFacebookVideo(url):
         videoName = findVideoName(pageContent, 'Facebook')
         videoObj, audioObj = maxResVideo(pageContent)
 
-        if not videoObj or not audioObj:
-            return None
-
         videoPath = downloadTempFile(videoObj.get("base_url"), f"{videoName}_video")
         audioPath = downloadTempFile(audioObj.get("base_url"), f"{videoName}_audio")
-        if videoPath and audioPath:
-            outputPath = combineVideoAudio(videoPath, audioPath, videoName)
-            return outputPath
-        else:
-            return None
+        outputPath = combineVideoAudio(videoPath, audioPath, videoName)
+        return outputPath
 
     except Exception as e:
         print(f"An error occurred: {e}")

@@ -1,9 +1,10 @@
+import json
 import re
+import subprocess
 import tempfile
 import os
 import bs4
 import requests
-from moviepy.editor import VideoFileClip, AudioFileClip
 from playwright.sync_api import sync_playwright
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -18,15 +19,15 @@ def getStreamRequest(url, params=None, cookies=None, headers=None):
         return None
 
 
-def getTempPath(fileName):
+def getTempPath(name):
     tempDir = tempfile.gettempdir()
-    return os.path.join(tempDir, f"{fileName}.mp4")
+    return os.path.join(tempDir, f"{name}.mp4")
 
 
-def downloadTempFile(url, videoName):
+def downloadTempFile(url, name):
     try:
         response = requests.get(url)
-        tempPath = getTempPath(videoName)
+        tempPath = getTempPath(name)
 
         with open(tempPath, 'wb') as file:
             file.write(response.content)
@@ -39,15 +40,15 @@ def downloadTempFile(url, videoName):
 def combineVideoAudio(videoPath, audioPath, videoName):
     try:
         tempPath = getTempPath(videoName)
-        videoClip = VideoFileClip(videoPath)
-        audioClip = AudioFileClip(audioPath)
-
-        finalClip = videoClip.set_audio(audioClip)
-        finalClip.write_videofile(tempPath)
-
+        command = [
+            'ffmpeg', '-i', videoPath, '-i', audioPath,
+            '-c:v', 'copy', '-c:a', 'aac', '-strict', 'experimental', '-q:v', '1', '-q:a', '1', tempPath
+        ]
+        subprocess.run(command, check=True)
         os.remove(videoPath)
         os.remove(audioPath)
         return tempPath
+
     except Exception as e:
         print(f"An error occurred while combining video and audio: {e}")
         return None
@@ -71,7 +72,7 @@ def getMaxResolution(objects, tag):
     return max(objects, key=lambda x: int(x.get(tag, 0)), default=None)
 
 
-def extractVideoID(url, pattern):
+def extractTextPattern(url, pattern):
     match = re.search(pattern, url)
     return match.group(1) if match else None
 
@@ -84,3 +85,10 @@ def formatVideoName(name):
 def findVideoName(content, platform):
     meta_tag = content.find('meta', attrs={'name': 'description'})
     return formatVideoName(meta_tag.get('content')) if meta_tag else platform + 'Video'
+
+
+def getScriptJson(url, scriptType):
+    streamContent = getStreamRequest(url)
+    soup = getBeautifulSoup(streamContent)
+    scriptTag = soup.find('script', type=scriptType)
+    return json.loads(scriptTag.text.strip())
