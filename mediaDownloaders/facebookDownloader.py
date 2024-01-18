@@ -3,7 +3,7 @@ from mediaDownloaders.util.mediaHandler import *
 
 
 def findMaxResolution(representations):
-    maxResoObj = max(representations, key=lambda x: int(x.get("bandwidth", 0)), default=None)
+    maxResoObj = getMaxResolution(representations, "bandwidth")
     audioObj = next((obj for obj in representations if 'audio/mp4' in str(obj.get("mime_type", ''))), None)
     return maxResoObj, audioObj
 
@@ -22,11 +22,6 @@ def findVideoUrl(jsonData):
     return None, None
 
 
-def findVideoName(content):
-    meta_tag = content.find('meta', attrs={'name': 'description'})
-    return formatVideoName(meta_tag.get('content')) if meta_tag else 'FacebookVideo'
-
-
 def maxResVideo(content):
     tags = content.find_all('script')
     for tag in tags:
@@ -42,7 +37,7 @@ def maxResVideo(content):
 def downloadFacebookVideo(url):
     try:
         pageContent = getPageContent(url)
-        videoName = findVideoName(pageContent)
+        videoName = findVideoName(pageContent, 'Facebook')
         videoObj, audioObj = maxResVideo(pageContent)
 
         if not videoObj or not audioObj:

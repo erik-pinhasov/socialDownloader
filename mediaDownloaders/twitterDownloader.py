@@ -1,10 +1,7 @@
 import json
-import re
+from mediaDownloaders.util.mediaHandler import *
 
-import requests
-
-from mediaDownloaders.util.mediaHandler import downloadTempFile
-
+ROOT_LINK = 'https://twitter.com/i/api/graphql/7DoGe0BiedOgxkJNXr5K0A/TweetDetail'
 COOKIES = {
     'auth_token': 'e57a24faea0c67d3c835629ea27ecb9d2aa29b97',
     'ct0': '2f57bb860cf9bffd880cee840acb7281b83be68f7285534b5464fbe12d50a2ce19a66e54f897e5aafc461c3ee05584789a295df36b4b7afec9828fa118e590d5a273afbb8b8f890700bd9cfbf2bbf6d1',
@@ -27,21 +24,14 @@ def generateReqParams(videoID):
 
 def getMaxQualityVideo(videoID):
     try:
-        response = requests.get(
-            'https://twitter.com/i/api/graphql/7DoGe0BiedOgxkJNXr5K0A/TweetDetail',
-            params=generateReqParams(videoID),
-            cookies=COOKIES,
-            headers=HEADERS,
-            stream=True
-        )
-
-        json_data = json.loads(response.text)
-        infoObj = (json_data['data']['threaded_conversation_with_injections']['instructions'][0]['entries'][0]
+        streamContent = getStreamRequest(ROOT_LINK, generateReqParams(videoID), COOKIES, HEADERS)
+        jsonData = json.loads(streamContent)
+        infoObj = (jsonData['data']['threaded_conversation_with_injections']['instructions'][0]['entries'][0]
         ['content']['itemContent']['tweet_results']['result']['legacy'])
         videoObjs = infoObj['entities']['media'][0]['video_info']['variants']
         videoName = extractVideoName(infoObj['full_text'])
-        maxVideo = max(videoObjs, key=lambda x: x.get('bitrate', 0))
-        return maxVideo, videoName
+        maxVideo = getMaxResolution(videoObjs, 'bitrate')
+        return maxVideo['url'], videoName
 
     except Exception as e:
         print(f"Failed to download the file. Error: {e}")
@@ -49,15 +39,12 @@ def getMaxQualityVideo(videoID):
 
 
 def extractVideoName(text):
-    url_pattern = r'https?://[^\s]+'
-    return re.sub(url_pattern, '', text).strip()
-
-
-def extractTweetID(url):
-    match = re.search(r'/status/(\d+)', url)
-    return match.group(1) if match else None
+    urlPattern = r'https?://[^\s]+'
+    name = re.sub(urlPattern, '', text).strip()
+    return formatVideoName(name) if name else 'TwitterVideo'
 
 
 def downloadTwitterVideo(url):
-    videoObj, videoName = getMaxQualityVideo(extractTweetID(url))
-    return downloadTempFile(videoObj['url'], videoName)
+    videoID = extractVideoID(url, r'/status/(\d+)')
+    videoObj, videoName = getMaxQualityVideo(videoID)
+    return downloadTempFile(videoObj, videoName)

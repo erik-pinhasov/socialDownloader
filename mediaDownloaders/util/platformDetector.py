@@ -2,12 +2,13 @@ from mediaDownloaders.youtubeDownloader import downloadYoutubeVideo
 from mediaDownloaders.facebookDownloader import downloadFacebookVideo
 from mediaDownloaders.instagramDownloader import downloadInstagramVideo
 from mediaDownloaders.twitterDownloader import downloadTwitterVideo
+from mediaDownloaders.linkedinDownloader import downloadLinkedinVideo
 
 PLATFORMS = {
     "youtube": ["youtube.com", "youtu.be"],
     "facebook": ["facebook.com"],
     "instagram": ["instagram.com"],
-    "linkedIn": ["linkedin.com"],
+    "linkedin": ["linkedin.com"],
     "twitter": ["twitter.com"],
     "snapchat": ["snapchat.com"]
 }
@@ -17,6 +18,7 @@ PLATFORM_DOWNLOADERS = {
     "facebook": downloadFacebookVideo,
     "instagram": downloadInstagramVideo,
     "twitter": downloadTwitterVideo,
+    "linkedin": downloadLinkedinVideo,
 }
 
 

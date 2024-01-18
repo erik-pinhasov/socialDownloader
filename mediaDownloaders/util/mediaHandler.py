@@ -1,3 +1,4 @@
+import re
 import tempfile
 import os
 import bs4
@@ -6,6 +7,15 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 from playwright.sync_api import sync_playwright
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+
+
+def getStreamRequest(url, params=None, cookies=None, headers=None):
+    try:
+        response = requests.get(url, params=params, cookies=cookies, headers=headers, stream=True)
+        return response.text
+    except Exception as e:
+        print(f"An error occurred while getting stream request: {e}")
+        return None
 
 
 def getTempPath(fileName):
@@ -50,8 +60,27 @@ def getPageContent(url):
         page.goto(url)
         content = page.content()
         browser.close()
-        return bs4.BeautifulSoup(content, 'html.parser')
+        return getBeautifulSoup(content)
+
+
+def getBeautifulSoup(content):
+    return bs4.BeautifulSoup(content, 'html.parser')
+
+
+def getMaxResolution(objects, tag):
+    return max(objects, key=lambda x: int(x.get(tag, 0)), default=None)
+
+
+def extractVideoID(url, pattern):
+    match = re.search(pattern, url)
+    return match.group(1) if match else None
 
 
 def formatVideoName(name):
-    return "".join(x if x.isalnum() or x in (" ", ".", "-") else "" for x in name)
+    first_line = name.splitlines()[0]
+    return "".join(x if x.isalnum() or x in (" ", ".", "-") else "" for x in first_line)
+
+
+def findVideoName(content, platform):
+    meta_tag = content.find('meta', attrs={'name': 'description'})
+    return formatVideoName(meta_tag.get('content')) if meta_tag else platform + 'Video'
