@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.http import FileResponse
 from django.shortcuts import render, redirect
-from socialDownloaderApp.mediaDownloaders.util.platformDetector import detectPlatform
+from socialDownloaderApp.mediaDownloaders.util.platformDetector import detectPlatform, PLATFORM_INFO
 import os
 
 
@@ -17,18 +17,18 @@ class CleanUpFileResponse(FileResponse):
 
 
 def downloadMediaView(request):
-    media_url = request.POST.get('mediaUrl', '')
-    downloader = detectPlatform(media_url)
-    file_path = downloader(media_url)
-
-    if file_path and os.path.exists(file_path):
-        response = CleanUpFileResponse(open(file_path, 'rb'), as_attachment=True,
-                                       filename=os.path.basename(file_path), file_path=file_path)
+    try:
+        mediaUrl = request.POST.get('mediaUrl', '')
+        downloader = detectPlatform(mediaUrl)
+        filePath = downloader(mediaUrl)
+        response = CleanUpFileResponse(open(filePath, 'rb'), as_attachment=True,
+                                       filename=os.path.basename(filePath), file_path=filePath)
         return response
-    else:
-        messages.error(request, "Error, download failed.")
+    except Exception as e:
+        print(f"Error : {e}")
+        messages.error(request, "שגיאה, הורדה לא בוצעה.")
         return redirect('home')
 
 
 def home(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'PLATFORM_INFO': PLATFORM_INFO})

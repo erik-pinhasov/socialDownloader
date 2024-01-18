@@ -4,28 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">הורידו סרטונים מרשתות חברתיות</h1>
+    <div class="pageContainer">
+        <img src="{% static 'assets/title.png' %}" alt="הורידו סרטונים מרשתות חברתיות"  class="designed-title">
+        <div id="socialMediaLogos">
+            {% for platform, info in PLATFORM_INFO.items %}
+                <img src="{% static 'assets/'|add:platform|add:'.png' %}" alt="{{ platform }}" class="logo" data-platform="{{ platform|lower }}">
+            {% endfor %}
+        </div>
+        <h2>הסרטון המתקבל הינו באיכות הגבוהה ביותר הנמצאה ברשת החברתית</h2>
         <form id="downloadForm" action="{% url 'downloadMedia' %}" method="post">
             {% csrf_token %}
-            <input type="text" id="mediaUrl" name="mediaUrl" placeholder="הדבק את כתובת הסרטון">
-            <button type="submit">הורד</button>
-            <span id="detectedPlatform"></span>
+            <input type="text" id="mediaUrl" name="mediaUrl" placeholder="הזינו את כתובת הסרטון">
+            <div id="detectedPlatform"></div>
+            <button type="submit">הורדה</button>
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <h3>בלחיצה על כפתור הורדה אני מתחייב כי לא אעשה שימוש במדיה לשימוש מסחרי, אלא לשימוש אישי בלבד.<br>
+            לא ניתן להוריד סרטונים המוגדרים עם הגבלת גיל או של חשבונות פרטיים.</h3>
         </form>
     </div>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                {% if message.tags %}
-                    <li {% if message.tags %} role="alert" class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
+

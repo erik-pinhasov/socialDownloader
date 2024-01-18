@@ -5,28 +5,37 @@ from socialDownloaderApp.mediaDownloaders.twitterDownloader import downloadTwitt
 from socialDownloaderApp.mediaDownloaders.linkedinDownloader import downloadLinkedinVideo
 from socialDownloaderApp.mediaDownloaders.snapchatDownloader import downloadSnapchatVideo
 
-PLATFORMS = {
-    "youtube": ["youtube.com", "youtu.be"],
-    "facebook": ["facebook.com"],
-    "instagram": ["instagram.com"],
-    "linkedin": ["linkedin.com"],
-    "twitter": ["twitter.com"],
-    "snapchat": ["snapchat.com"]
-}
-
-PLATFORM_DOWNLOADERS = {
-    "youtube": downloadYoutubeVideo,
-    "facebook": downloadFacebookVideo,
-    "instagram": downloadInstagramVideo,
-    "twitter": downloadTwitterVideo,
-    "linkedin": downloadLinkedinVideo,
-    "snapchat": downloadSnapchatVideo
+PLATFORM_INFO = {
+    "youtube": {
+        "patterns": ["youtube.com", "youtu.be"],
+        "downloader": downloadYoutubeVideo,
+    },
+    "facebook": {
+        "patterns": ["facebook.com"],
+        "downloader": downloadFacebookVideo,
+    },
+    "instagram": {
+        "patterns": ["instagram.com"],
+        "downloader": downloadInstagramVideo,
+    },
+    "linkedin": {
+        "patterns": ["linkedin.com"],
+        "downloader": downloadLinkedinVideo,
+    },
+    "twitter": {
+        "patterns": ["twitter.com"],
+        "downloader": downloadTwitterVideo,
+    },
+    "snapchat": {
+        "patterns": ["snapchat.com"],
+        "downloader": downloadSnapchatVideo,
+    },
 }
 
 
 def detectPlatform(url):
     url = url.lower()
-    for platform, patterns in PLATFORMS.items():
-        if any(pattern in url for pattern in patterns):
-            return PLATFORM_DOWNLOADERS.get(platform)
+    for platform, info in PLATFORM_INFO.items():
+        if any(pattern in url for pattern in info["patterns"]):
+            return info["downloader"]
     return None
