@@ -1,8 +1,15 @@
 
 @font-face {
+    font-family: 'Rubik Lines';
+    src: url('/static/assets/RubikLines-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'ganclm';
     src: url('/static/assets/ganclm_bold-webfont.woff') format('woff'),
-         url('/static/assets/ganclm_bold-webfont.tff') format('truetype');
+         url('/static/assets/ganclm_bold-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -17,9 +24,9 @@ body {
 }
 
 h1 {
-    font-family: 'ganclm', sans-serif;
+    font-family: 'Rubik Lines';
     font-size: 60px;
-    color: #2e8227;
+    color: cadetblue;
 }
 
 h2 {
@@ -30,6 +37,11 @@ h2 {
 h3 {
     font-family: 'ganclm', sans-serif;
     font-size: 20px;
+}
+
+p {
+    font-family: 'ganclm', sans-serif;
+    font-size: 16px;
 }
 
 .pageContainer {
@@ -53,24 +65,24 @@ h3 {
     width: 70%;
     padding: 15px;
     font-size: large;
-    margin-bottom: 20px;
     border-radius: 5px;
     border: 2px solid #000;
     text-align: center;
     align-self: center;
 }
 
-#detectedPlatform {
-    color: #43bc38;
-    padding: 10px 40px;
-    font-weight: bold;
-    font-size: 30px;
-}
-
-img.designed-title {
-    width: 1000px;
-    height: auto;
-    justify-self: center;
+.customAlert {
+    font-family: 'ganclm', sans-serif;
+    font-size: 26px;
+    display: none;
+    position: fixed;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%);
+    color: white;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .logo {

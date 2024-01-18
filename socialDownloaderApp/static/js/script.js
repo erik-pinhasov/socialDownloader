@@ -1,44 +1,69 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const mediaUrlInput = document.getElementById('mediaUrl');
-    const platformLogo = document.getElementById('platformLogo');
     const form = document.getElementById('downloadForm');
+    const urlToCopy = "https://www.linkedin.com/posts/erik-pinhasov_try-my-app-now-deployed-on-free-tier-server-" +
+                      "activity-7149671038568632320-C7Q7";
+    const copyLink = document.getElementById("copyLink");
 
-    form.addEventListener('submit', clearMessages);
-
-    form.addEventListener('submit', function (event) {
-        const lowerCaseUrl = mediaUrlInput.value.toLowerCase();
-        const platform = detectPlatform(lowerCaseUrl);
-
-        if (!mediaUrlInput.value.trim()) {
-            event.preventDefault();
-            alert('כתובת ריקה');
-        } else if (!platform) {
-            event.preventDefault();
-            alert('כתובת מדיה לא נתמכת');
-        }
-    });
-
-    mediaUrlInput.addEventListener('input', function () {
-        const lowerCaseUrl = mediaUrlInput.value.toLowerCase();
-        const platform = detectPlatform(lowerCaseUrl);
-
-        console.log(`Platform detected: ${platform}`);
-
-        // Reset the styles of all .logo elements
-        const allLogos = document.querySelectorAll('.logo');
-        allLogos.forEach(logo => {
-            logo.style.height = '80px';
-            logo.style.width = '80px';// Reset to the original size
-        });
-
-        // Get the corresponding logo image element and enlarge it
-        const logo = document.querySelector(`.logo[data-platform="${platform}"]`);
-        if (logo) {
-            logo.style.height = '120px';
-            logo.style.width = '120px';// Adjust the height to your desired size
-        }
-    });
+    copyLink.addEventListener("click", event => copyToClipboard(event, urlToCopy));
+    form.addEventListener('submit', event => processFormSubmission(event, mediaUrlInput));
+    mediaUrlInput.addEventListener('input', () => handleMediaUrlInput(mediaUrlInput));
 });
+
+function copyToClipboard(event, text) {
+    event.preventDefault();
+    navigator.clipboard.writeText(text)
+    showCustomAlert('הקישור הועתק', 'green');
+}
+
+function showCustomAlert(message, backgroundColor) {
+    const alertBox = document.getElementById('customAlert');
+    alertBox.textContent = message;
+    alertBox.style.display = 'block';
+    alertBox.style.backgroundColor = backgroundColor;
+    setTimeout(() => {
+        alertBox.style.display = 'none';
+    }, 3000);
+}
+
+function processFormSubmission(event, inputElement) {
+    clearMessages();
+    const url = inputElement.value.trim().toLowerCase();
+    const platform = detectPlatform(url);
+
+    if (!url) {
+        event.preventDefault();
+        showCustomAlert('נא להזין קישור', 'red');
+    } else if (!platform) {
+        event.preventDefault();
+        showCustomAlert('קישור לא נתמכת', 'red');
+    }
+}
+
+function handleMediaUrlInput(inputElement) {
+    const url = inputElement.value.toLowerCase();
+    const platform = detectPlatform(url);
+    updatePlatformLogos(platform);
+}
+
+function updatePlatformLogos(platform) {
+    const allLogos = document.querySelectorAll('.logo');
+    allLogos.forEach(logo => resetLogoSize(logo));
+    if (platform) {
+        const logo = document.querySelector(`.logo[data-platform="${platform}"]`);
+        if (logo) enlargeLogo(logo);
+    }
+}
+
+function resetLogoSize(logo) {
+    logo.style.height = '80px';
+    logo.style.width = '80px';
+}
+
+function enlargeLogo(logo) {
+    logo.style.height = '120px';
+    logo.style.width = '120px';
+}
 
 function detectPlatform(url) {
     const patterns = {
@@ -49,17 +74,11 @@ function detectPlatform(url) {
         'twitter': /twitter\.com/,
         'snapchat': /snapchat\.com/
     };
-
-    for (let platform in patterns) {
-        if (patterns[platform].test(url)) {
-            return platform;
-        }
-    }
-    return null;
+    return Object.keys(patterns).find(platform => patterns[platform].test(url)) || null;
 }
 
 function clearMessages() {
-    var messagesContainer = document.querySelector('.messages');
+    const messagesContainer = document.querySelector('.messages');
     if (messagesContainer) {
         messagesContainer.innerHTML = '';
     }
