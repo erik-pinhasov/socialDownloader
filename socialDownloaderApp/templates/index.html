@@ -23,11 +23,11 @@
             <p>דוגמה לשימוש: קישור לסרטון שהעלתי ללינקדאין על שימוש באפליקציה שיצרתי <a href="#" id="copyLink">לחצו להעתקה</a></p>
             <button type="submit">הורדה</button>
             {% if messages %}
-                <ul class="messages">
+                <div id="messagesData" style="display: none;">
                     {% for message in messages %}
-                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        <div class="message" data-text="{{ message }}" data-tags="{{ message.tags }}"></div>
                     {% endfor %}
-                </ul>
+                </div>
             {% endif %}
             <h3>בלחיצה על כפתור הורדה אני מתחייב כי לא אעשה שימוש במדיה לשימוש מסחרי, אלא לשימוש אישי בלבד.<br>
             לא ניתן להוריד סרטונים המוגדרים עם הגבלת גיל או של חשבונות פרטיים.</h3>

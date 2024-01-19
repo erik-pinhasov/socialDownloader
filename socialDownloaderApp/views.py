@@ -23,10 +23,11 @@ def downloadMediaView(request):
         filePath = downloader(mediaUrl)
         response = CleanUpFileResponse(open(filePath, 'rb'), as_attachment=True,
                                        filename=os.path.basename(filePath), file_path=filePath)
+        messages.success(request, "ההורדה בוצעה.")
         return response
     except Exception as e:
         print(f"Error : {e}")
-        messages.error(request, "שגיאה, הורדה לא בוצעה.")
+        messages.error(request, "שגיאה, ההורדה נכשלה.")
         return redirect('home')
 
 

@@ -8,7 +8,24 @@ document.addEventListener('DOMContentLoaded', () => {
     copyLink.addEventListener("click", event => copyToClipboard(event, urlToCopy));
     form.addEventListener('submit', event => processFormSubmission(event, mediaUrlInput));
     mediaUrlInput.addEventListener('input', () => handleMediaUrlInput(mediaUrlInput));
+    displayServerMessages();
 });
+
+function displayServerMessages() {
+    const messagesData = document.querySelectorAll('#messagesData .message');
+    messagesData.forEach(messageDiv => {
+        const messageText = messageDiv.getAttribute('data-text');
+        const messageTags = messageDiv.getAttribute('data-tags');
+        let backgroundColor = 'white';
+
+        if (messageTags.includes('error')) {
+            backgroundColor = 'red';
+        } else if (messageTags.includes('success')) {
+            backgroundColor = 'blue';
+        }
+        showCustomAlert(messageText, backgroundColor);
+    });
+}
 
 function copyToClipboard(event, text) {
     event.preventDefault();
@@ -23,7 +40,7 @@ function showCustomAlert(message, backgroundColor) {
     alertBox.style.backgroundColor = backgroundColor;
     setTimeout(() => {
         alertBox.style.display = 'none';
-    }, 3000);
+    }, 4000);
 }
 
 function processFormSubmission(event, inputElement) {

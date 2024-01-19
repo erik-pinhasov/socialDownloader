@@ -15,5 +15,3 @@ def downloadInstagramVideo(url):
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
-
-downloadInstagramVideo('https://www.instagram.com/p/C0wlbk6o1DI/')
