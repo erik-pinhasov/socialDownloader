@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     initializeEventListeners();
-    displayServerMessages();
 });
 
 function initializeEventListeners() {
@@ -118,21 +117,6 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function displayServerMessages() {
-    const messagesData = document.querySelectorAll('#messagesData .message');
-    messagesData.forEach(messageDiv => {
-        const messageText = messageDiv.getAttribute('data-text');
-        const messageTags = messageDiv.getAttribute('data-tags');
-        let backgroundColor = 'white';
-
-        if (messageTags.includes('error')) {
-            showCustomAlert(messageText,'red');
-        } else if (messageTags.includes('success')) {
-            showCustomAlert(messageText,'green');
-        }
-    });
-}
-
 function copyToClipboard(event, text) {
     event.preventDefault();
     navigator.clipboard.writeText(text)
@@ -148,7 +132,6 @@ function showCustomAlert(message, backgroundColor) {
         alertBox.style.display = 'none';
     }, 3000);
 }
-
 
 function handleMediaUrlInput(inputElement) {
     const url = inputElement.value.toLowerCase();
@@ -166,13 +149,11 @@ function updatePlatformLogos(platform) {
 }
 
 function resetLogoSize(logo) {
-    logo.style.height = '80px';
-    logo.style.width = '80px';
+    logo.style.transform = 'scale(1)';
 }
 
 function enlargeLogo(logo) {
-    logo.style.height = '120px';
-    logo.style.width = '120px';
+    logo.style.transform = 'scale(1.5)';
 }
 
 function detectPlatform(url) {

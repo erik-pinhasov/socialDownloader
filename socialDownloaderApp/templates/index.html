@@ -3,7 +3,7 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <script src="{% static 'js/script.js' %}"></script>
 </head>
@@ -16,26 +16,18 @@
                 <img src="{% static 'assets/'|add:platform|add:'.png' %}" alt="{{ platform }}" class="logo" data-platform="{{ platform|lower }}">
             {% endfor %}
         </div>
-        <h2>הסרטון המתקבל הינו באיכות הגבוהה ביותר מהתוצאות האפשריות</h2>
+        <h2>הסרטון המתקבל הינו באיכות הגבוהה ביותר מהתוצאות הקיימות</h2>
         <form id="downloadForm" action="{% url 'downloadMedia' %}" method="post">
             {% csrf_token %}
             <input type="text" id="mediaUrl" name="mediaUrl" placeholder="הזינו את קישור הסרטון">
-            <p>דוגמה לשימוש: קישור לסרטון שהעלתי ללינקדאין על שימוש באפליקציה שיצרתי <a href="#" id="copyLink">לחצו להעתקה</a></p>
+            <p>דוגמה לשימוש: קישור לסרטון לינקדאין על שימוש באפליקציה שלי <a href="#" id="copyLink">לחצו להעתקה</a></p>
             <button type="submit">הורדה</button>
-            {% if messages %}
-                <div id="messagesData" style="display: none;">
-                    {% for message in messages %}
-                        <div class="message" data-text="{{ message }}" data-tags="{{ message.tags }}"></div>
-                    {% endfor %}
-                </div>
-            {% endif %}
             <h3>בלחיצה על כפתור הורדה אני מתחייב כי לא אעשה שימוש במדיה לשימוש מסחרי, אלא לשימוש אישי בלבד.<br>
             לא ניתן להוריד סרטונים המוגדרים עם הגבלת גיל או של חשבונות פרטיים.</h3>
             <div id="loadingSpinner" class="spinner-container" style="display: none;">
-                <div class="spinner"></div>
+                <div class="loader"></div>
             </div>
         </form>
     </div>
 </body>
 </html>
-

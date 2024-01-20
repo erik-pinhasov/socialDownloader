@@ -18,5 +18,9 @@ def getMaxQualityVideo(url):
 
 
 def downloadLinkedinVideo(url):
-    videoObj, videoName = getMaxQualityVideo(url)
-    return downloadTempFile(videoObj, videoName)
+    try:
+        videoObj, videoName = getMaxQualityVideo(url)
+        return downloadTempFile(videoObj, videoName)
+    except Exception as e:
+        print(f'Error in linkedin download: {e}')
+        return None

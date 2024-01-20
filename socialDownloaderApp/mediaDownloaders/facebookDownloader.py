@@ -1,6 +1,7 @@
 from socialDownloaderApp.mediaDownloaders.util.mediaHandler import *
 from socialDownloaderApp.mediaDownloaders.util.requestHeaders import FACEBOOK_HEADERS
 
+
 def findMaxResolution(representations):
     maxResoObj = getMaxResolution(representations, "bandwidth")
     audioObj = next((obj for obj in representations if 'audio/mp4' in str(obj.get("mime_type", ''))), None)
@@ -46,5 +47,5 @@ def downloadFacebookVideo(url):
         return outputPath
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"Error in facebook download: {e}")
         return None

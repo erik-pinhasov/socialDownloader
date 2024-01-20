@@ -1,5 +1,4 @@
 from pytube import YouTube
-
 from socialDownloaderApp.mediaDownloaders.util.mediaHandler import downloadTempFile
 
 
@@ -7,6 +6,7 @@ def downloadYoutubeVideo(url):
     try:
         yt = YouTube(url)
         video_stream = yt.streams.get_highest_resolution()
+        yt.bypass_age_gate()
         return downloadTempFile(video_stream.url, yt.title)
 
     except Exception as e:

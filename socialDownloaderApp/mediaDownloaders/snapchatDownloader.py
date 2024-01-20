@@ -1,5 +1,5 @@
 from socialDownloaderApp.mediaDownloaders.util.mediaHandler import *
-from socialDownloaderApp.mediaDownloaders.util.requestHeaders import SNAPCHAT_ROOT_URL
+from socialDownloaderApp.mediaDownloaders.util.requestHeaders import SNAPCHAT_URL
 
 
 def readFile(path):
@@ -11,7 +11,7 @@ def readFile(path):
 
 def getMediaUrl(url, mediaType):
     m3u8Path = downloadTempFile(url, mediaType + 'Playlist')
-    mediaUrl = SNAPCHAT_ROOT_URL + extractTextPattern(readFile(m3u8Path), r'#EXT-X-MAP:URI="([^"]+)"')
+    mediaUrl = SNAPCHAT_URL + extractTextPattern(readFile(m3u8Path), r'#EXT-X-MAP:URI="([^"]+)"')
     return mediaUrl
 
 
@@ -25,9 +25,9 @@ def processPlaylistFile(m3u8Path):
             width, height = map(int, re.search(r'RESOLUTION=(\d+)x(\d+)', line).groups())
             resolution = width * height
             if resolution > maxResVideo["resolution"]:
-                maxResVideo = {"url": SNAPCHAT_ROOT_URL + lines[i + 1], "resolution": resolution}
+                maxResVideo = {"url": SNAPCHAT_URL + lines[i + 1], "resolution": resolution}
         elif 'TYPE=AUDIO' in line:
-            audioUrl = getMediaUrl(SNAPCHAT_ROOT_URL + extractTextPattern(line, r'URI="([^"]+)"'), 'audio')
+            audioUrl = getMediaUrl(SNAPCHAT_URL + extractTextPattern(line, r'URI="([^"]+)"'), 'audio')
 
     videoUrl = getMediaUrl(maxResVideo["url"], 'video')
     return videoUrl, audioUrl
@@ -43,8 +43,13 @@ def getMaxQualityVideo(videoObj, videoName):
 
 
 def downloadSnapchatVideo(url):
-    jsonData = getScriptJson(url, 'application/json')
-    videoObj = jsonData['props']['pageProps']['preselectedStory']['premiumStory']['playerStory']
-    videoName = videoObj['storyTitle']['value']
-    videoPath, audioPath = getMaxQualityVideo(videoObj, videoName)
-    return combineVideoAudio(videoPath, audioPath, videoName)
+    try:
+        jsonData = getScriptJson(url, 'application/json')
+        videoObj = jsonData['props']['pageProps']['preselectedStory']['premiumStory']['playerStory']
+        videoName = videoObj['storyTitle']['value']
+        videoPath, audioPath = getMaxQualityVideo(videoObj, videoName)
+        return combineVideoAudio(videoPath, audioPath, videoName)
+
+    except Exception as e:
+        print(f'Error in snapchat download: {e}')
+        return None
