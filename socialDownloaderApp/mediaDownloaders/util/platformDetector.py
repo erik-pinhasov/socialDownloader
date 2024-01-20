@@ -5,13 +5,14 @@ from socialDownloaderApp.mediaDownloaders.twitterDownloader import downloadTwitt
 from socialDownloaderApp.mediaDownloaders.linkedinDownloader import downloadLinkedinVideo
 from socialDownloaderApp.mediaDownloaders.snapchatDownloader import downloadSnapchatVideo
 
+
 PLATFORM_INFO = {
     "youtube": {
         "patterns": ["youtube.com", "youtu.be"],
         "downloader": downloadYoutubeVideo,
     },
     "facebook": {
-        "patterns": ["facebook.com"],
+        "patterns": ["facebook.com", "fb.watch"],
         "downloader": downloadFacebookVideo,
     },
     "instagram": {
@@ -36,6 +37,10 @@ PLATFORM_INFO = {
 def detectPlatform(url):
     url = url.lower()
     for platform, info in PLATFORM_INFO.items():
-        if any(pattern in url for pattern in info["patterns"]):
-            return info["downloader"]
+        try:
+            if any(pattern in url for pattern in info["patterns"]):
+                return info["downloader"]
+        except Exception as e:
+            print(f"Error detect platform: {e}")
+            continue
     return None

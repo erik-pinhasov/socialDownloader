@@ -9,8 +9,7 @@ def downloadInstagramVideo(url):
     try:
         media = instaloader.Post.from_shortcode(insLoader.context, url.split("/")[-2])
         videoName = formatVideoName(media.caption) if media.caption else "InstagramVideo"
-        videoPath = downloadTempFile(media.video_url, videoName)
-        return videoPath
+        return downloadTempFile(media.video_url, videoName)
 
     except Exception as e:
         print(f"An error occurred: {e}")

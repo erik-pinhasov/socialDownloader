@@ -1,5 +1,5 @@
 from socialDownloaderApp.mediaDownloaders.util.mediaHandler import *
-
+from socialDownloaderApp.mediaDownloaders.util.requestHeaders import FACEBOOK_HEADERS
 
 def findMaxResolution(representations):
     maxResoObj = getMaxResolution(representations, "bandwidth")
@@ -35,7 +35,8 @@ def maxResVideo(content):
 
 def downloadFacebookVideo(url):
     try:
-        pageContent = getPageContent(url)
+        response = getStreamRequest(url, headers=FACEBOOK_HEADERS)
+        pageContent = getBeautifulSoup(response)
         videoName = findVideoName(pageContent, 'Facebook')
         videoObj, audioObj = maxResVideo(pageContent)
 

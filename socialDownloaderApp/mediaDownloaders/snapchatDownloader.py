@@ -1,6 +1,5 @@
 from socialDownloaderApp.mediaDownloaders.util.mediaHandler import *
-
-ROOT_URL = 'https://cf-st.sc-cdn.net/d/'
+from socialDownloaderApp.mediaDownloaders.util.requestHeaders import SNAPCHAT_ROOT_URL
 
 
 def readFile(path):
@@ -12,7 +11,7 @@ def readFile(path):
 
 def getMediaUrl(url, mediaType):
     m3u8Path = downloadTempFile(url, mediaType + 'Playlist')
-    mediaUrl = ROOT_URL + extractTextPattern(readFile(m3u8Path), r'#EXT-X-MAP:URI="([^"]+)"')
+    mediaUrl = SNAPCHAT_ROOT_URL + extractTextPattern(readFile(m3u8Path), r'#EXT-X-MAP:URI="([^"]+)"')
     return mediaUrl
 
 
@@ -26,9 +25,9 @@ def processPlaylistFile(m3u8Path):
             width, height = map(int, re.search(r'RESOLUTION=(\d+)x(\d+)', line).groups())
             resolution = width * height
             if resolution > maxResVideo["resolution"]:
-                maxResVideo = {"url": ROOT_URL + lines[i + 1], "resolution": resolution}
+                maxResVideo = {"url": SNAPCHAT_ROOT_URL + lines[i + 1], "resolution": resolution}
         elif 'TYPE=AUDIO' in line:
-            audioUrl = getMediaUrl(ROOT_URL + extractTextPattern(line, r'URI="([^"]+)"'), 'audio')
+            audioUrl = getMediaUrl(SNAPCHAT_ROOT_URL + extractTextPattern(line, r'URI="([^"]+)"'), 'audio')
 
     videoUrl = getMediaUrl(maxResVideo["url"], 'video')
     return videoUrl, audioUrl

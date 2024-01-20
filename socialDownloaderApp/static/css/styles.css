@@ -85,6 +85,33 @@ p {
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+.spinner-container {
+    position: fixed; /* or absolute */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+    z-index: 1000; /* Ensure it's above other items */
+}
+
+.spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1); /* Light grey border */
+    border-top: 8px solid #333; /* Dark grey border top */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .logo {
     width: 80px;
     margin-right: 60px;

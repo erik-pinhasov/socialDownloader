@@ -6,5 +6,5 @@ import debug_toolbar
 urlpatterns = [
     path('', views.home, name='home'),
     path('download/', views.downloadMediaView, name='downloadMedia'),
-    path('__debug__/', include(debug_toolbar.urls))
+    path('__debug__/', include(debug_toolbar.urls)),
 ]

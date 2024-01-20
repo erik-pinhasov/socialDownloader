@@ -1,7 +1,10 @@
-from django.contrib import messages
 from django.http import FileResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
+
+from socialDownloaderApp.mediaDownloaders.util.mediaHandler import formatVideoName
 from socialDownloaderApp.mediaDownloaders.util.platformDetector import detectPlatform, PLATFORM_INFO
+from django.http import JsonResponse
 import os
 
 
@@ -21,13 +24,14 @@ def downloadMediaView(request):
         mediaUrl = request.POST.get('mediaUrl', '')
         downloader = detectPlatform(mediaUrl)
         filePath = downloader(mediaUrl)
-        response = CleanUpFileResponse(open(filePath, 'rb'), as_attachment=True,
-                                       filename=os.path.basename(filePath), file_path=filePath)
-        messages.success(request, "ההורדה בוצעה.")
-        return response
+
+        if not filePath.lower().endswith('.mp4'):
+            return JsonResponse({'error': 'File is not valid'}, status=400)
+
+        return CleanUpFileResponse(open(filePath, 'rb'), as_attachment=True,
+                                   filename=os.path.basename(filePath), file_path=filePath)
     except Exception as e:
-        print(f"Error : {e}")
-        messages.error(request, "שגיאה, ההורדה נכשלה.")
+        print(f"Error downloadMediaView: {e}")
         return redirect('home')
 
 

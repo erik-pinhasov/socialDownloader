@@ -1,18 +1,5 @@
 from socialDownloaderApp.mediaDownloaders.util.mediaHandler import *
-
-ROOT_LINK = 'https://twitter.com/i/api/graphql/7DoGe0BiedOgxkJNXr5K0A/TweetDetail'
-COOKIES = {
-    'auth_token': 'e57a24faea0c67d3c835629ea27ecb9d2aa29b97',
-    'ct0': '2f57bb860cf9bffd880cee840acb7281b83be68f7285534b5464fbe12d50a2ce19a66e54f897e5aafc461c3ee05584789a295df36b4b7afec9828fa118e590d5a273afbb8b8f890700bd9cfbf2bbf6d1',
-}
-
-HEADERS = {
-    'authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA',
-    'content-type': 'application/json',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'x-csrf-token': '2f57bb860cf9bffd880cee840acb7281b83be68f7285534b5464fbe12d50a2ce19a66e54f897e5aafc461c3ee05584789a295df36b4b7afec9828fa118e590d5a273afbb8b8f890700bd9cfbf2bbf6d1',
-}
-
+from socialDownloaderApp.mediaDownloaders.util.requestHeaders import TWITTER_ROOT_URL, TWITTER_COOKIES, TWITTER_HEADERS
 
 def generateReqParams(videoID):
     return {
@@ -23,7 +10,7 @@ def generateReqParams(videoID):
 
 def getMaxQualityVideo(videoID):
     try:
-        streamContent = getStreamRequest(ROOT_LINK, generateReqParams(videoID), COOKIES, HEADERS)
+        streamContent = getStreamRequest(TWITTER_ROOT_URL, generateReqParams(videoID), TWITTER_COOKIES, TWITTER_HEADERS)
         jsonData = json.loads(streamContent)
         infoObj = (jsonData['data']['threaded_conversation_with_injections']['instructions'][0]['entries'][0]
         ['content']['itemContent']['tweet_results']['result']['legacy'])
