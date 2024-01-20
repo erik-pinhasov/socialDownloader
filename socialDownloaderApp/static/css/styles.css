@@ -69,6 +69,7 @@ p {
     border: 2px solid #000;
     text-align: center;
     align-self: center;
+    font-weight: 800;
 }
 
 .customAlert {
@@ -189,12 +190,13 @@ button:hover {
     }
 
     h3, p {
-        font-size: 18px;
+        font-size: 16px;
         margin-top: 10px;
     }
 
     #mediaUrl {
         width: 80%;
+        font-weight: 700;
     }
 
     .logo {

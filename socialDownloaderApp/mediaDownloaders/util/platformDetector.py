@@ -12,7 +12,7 @@ PLATFORM_INFO = {
         "downloader": downloadYoutubeVideo,
     },
     "facebook": {
-        "patterns": ["facebook.com", "fb.watch"],
+        "patterns": ["facebook.com", "fb.watch", "fb.me"],
         "downloader": downloadFacebookVideo,
     },
     "instagram": {
@@ -24,7 +24,7 @@ PLATFORM_INFO = {
         "downloader": downloadLinkedinVideo,
     },
     "twitter": {
-        "patterns": ["twitter.com"],
+        "patterns": ["twitter.com", "t.co"],
         "downloader": downloadTwitterVideo,
     },
     "snapchat": {

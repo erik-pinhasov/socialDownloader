@@ -41,7 +41,6 @@ function submitFormData(formData) {
         method: 'POST',
         body: formData,
         credentials: 'same-origin',
-        headers: { 'X-CSRFToken': getCookie('csrftoken') }
     }).then(response => handleResponse(response))
     .catch(error => handleError(error));
 }
@@ -52,14 +51,14 @@ function handleResponse(response) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const contentType = response.headers.get('Content-Type');
-    if (!contentType.includes('video/mp4')) {
-        showCustomAlert('הקובץ אינו בפורמט mp4.', 'red');
-        throw new Error('File is not an mp4.');
+    const contentDisposition = response.headers.get('Content-Disposition');
+    const filename = getFilenameFromDisposition(contentDisposition);
+
+    if (!filename.endsWith('.mp4')) {
+        showCustomAlert('ההורדה לא בוצעה.', 'red');
+        throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const contentDisposition = response.headers.get('Content-Disposition');
-    const filename = getFilenameFromDisposition(contentDisposition) || 'downloaded_file';
     return response.blob().then(blob => initiateFileDownload(blob, filename));
 }
 
@@ -100,21 +99,6 @@ function handleError(error) {
     showCustomAlert('שגיאה, ההורדה נכשלה.', 'red');
     const loadingSpinner = document.getElementById('loadingSpinner');
     loadingSpinner.style.display = 'none';
-}
-
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
 }
 
 function copyToClipboard(event, text) {
@@ -159,10 +143,10 @@ function enlargeLogo(logo) {
 function detectPlatform(url) {
     const patterns = {
         'youtube': /youtube\.com|youtu\.be/,
-        'facebook': /facebook\.com|fb\.watch\/[\w-]+/,
+        'facebook': /facebook\.com|fb\.watch|fb\.me\/[\w-]+/,
         'instagram': /instagram\.com/,
         'linkedin': /linkedin\.com/,
-        'twitter': /twitter\.com/,
+        'twitter': /twitter\.com|t\.co/,
         'snapchat': /snapchat\.com/
     };
     return Object.keys(patterns).find(platform => patterns[platform].test(url)) || null;

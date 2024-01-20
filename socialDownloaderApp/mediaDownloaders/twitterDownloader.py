@@ -1,3 +1,6 @@
+import bs4
+import requests
+
 from socialDownloaderApp.mediaDownloaders.util.mediaHandler import *
 from socialDownloaderApp.mediaDownloaders.util.requestHeaders import *
 
@@ -25,9 +28,19 @@ def extractVideoName(text):
     return formatVideoName(name) if name else 'TwitterVideo'
 
 
+def checkTwitterShortUrl(url):
+    streamContent = requests.get(url, headers=TWITTER_HEADERS)
+    soup = bs4.BeautifulSoup(streamContent.content, 'html.parser')
+    metaTag = soup.find('meta')
+    return metaTag['content'].split('URL=')[1]
+
+
 def downloadTwitterVideo(url):
     try:
-        videoID = extractTextPattern(url, r'/status/(\d+)')
+        pattern = r'/status/(\d+)'
+        videoID = extractTextPattern(url, pattern)
+        if not videoID:
+            videoID = extractTextPattern(checkTwitterShortUrl(url), pattern)
         videoObj, videoName = getMaxQualityVideo(videoID)
         return downloadTempFile(videoObj, videoName)
     except Exception as e:
