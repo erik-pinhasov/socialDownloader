@@ -78,5 +78,5 @@ USE_I18N = True
 USE_TZ = True
 DEBUG = False
 
-STATIC_URL = '/static/'
+STATIC_URL = 'socialDownloaderApp/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'socialDownloaderApp/static')
