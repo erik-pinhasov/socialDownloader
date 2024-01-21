@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-9$cuu5+s3r&2i%$rcq&20wb736!yq$7u5%kd71@*9n#s01dzn7'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://socialdownloader-ofhs.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.auth',
@@ -64,8 +64,6 @@ LOGGING = {
 }
 
 WSGI_APPLICATION = 'socialDownloaderApp.wsgi.application'
-FFMPEG_DIR = BASE_DIR / 'mediaDownloaders'
-os.environ['PATH'] += os.pathsep + str(FFMPEG_DIR)
 
 DATABASES = {
     'default': {
@@ -78,7 +76,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-DEBUG = True
+DEBUG = False
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'socialDownloaderApp/static')

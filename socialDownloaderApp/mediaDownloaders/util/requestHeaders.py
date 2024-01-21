@@ -2,9 +2,9 @@ WIN_AGENT = "(Windows NT 10.0; Win64; x64)"
 
 LINUX_AGENT = "(X11; Linux x86_64)"
 
-SERVER_OS = "Windows"
+SERVER_OS = "Linux"
 
-USER_AGENT = f"Mozilla/5.0 {WIN_AGENT} AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+USER_AGENT = f"Mozilla/5.0 {LINUX_AGENT} AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
 TWITTER_URL = 'https://twitter.com/i/api/graphql/7DoGe0BiedOgxkJNXr5K0A/TweetDetail'
 
