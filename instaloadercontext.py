@@ -32,7 +32,7 @@ def copy_session(session: requests.Session, request_timeout: Optional[float] = N
 
 
 def default_user_agent() -> str:
-    return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    return ""
 
 
 def default_iphone_headers() -> Dict[str, Any]:
@@ -183,7 +183,6 @@ class InstaloaderContext:
                   'Host': 'www.instagram.com',
                   'Origin': 'https://www.instagram.com',
                   'Referer': 'https://www.instagram.com/',
-                  'User-Agent': self.user_agent,
                   'X-Instagram-AJAX': '1',
                   'X-Requested-With': 'XMLHttpRequest'}
         if empty_session_only:
