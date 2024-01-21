@@ -19,7 +19,7 @@ import requests.utils
 
 from .exceptions import *
 
-
+# ERIK PI !!!!
 def copy_session(session: requests.Session, request_timeout: Optional[float] = None) -> requests.Session:
     """Duplicates a requests.Session."""
     new = requests.Session()
@@ -176,16 +176,30 @@ class InstaloaderContext:
 
     def _default_http_header(self, empty_session_only: bool = False) -> Dict[str, str]:
         """Returns default HTTP header we use for requests."""
-        header = {'Accept-Encoding': 'gzip, deflate, br',
-                  'Accept-Language': 'en-US,en;q=0.9,he-IL;q=0.8,he;q=0.7',
-                  'Connection': 'keep-alive',
-                  'Content-Length': '0',
-                  'Host': 'www.instagram.com',
-                  'Origin': 'https://www.instagram.com',
-                  'Referer': 'https://www.instagram.com/',
-                  'User-Agent': self.user_agent,
-                  'X-Instagram-AJAX': '1',
-                  'X-Requested-With': 'XMLHttpRequest'}
+        header = {'authority': 'www.instagram.com',
+                  'accept': '*/*',
+                  'accept-language': 'en-US,en;q=0.9,he-IL;q=0.8,he;q=0.7',
+                  'content-type': 'application/x-www-form-urlencoded',
+                  'dpr': '1',
+                  'origin': 'https://www.instagram.com',
+                  'referer': 'https://www.instagram.com/p/C0wlbk6o1DI/',
+                  'sec-ch-prefers-color-scheme': 'light',
+                  'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+                  'sec-ch-ua-full-version-list': '"Not_A Brand";v="8.0.0.0", "Chromium";v="120.0.6099.199", "Google Chrome";v="120.0.6099.199"',
+                  'sec-ch-ua-mobile': '?0',
+                  'sec-ch-ua-model': '""',
+                  'sec-ch-ua-platform': '"Linux"',
+                  'sec-ch-ua-platform-version': '"5.15.133"',
+                  'sec-fetch-dest': 'empty',
+                  'sec-fetch-mode': 'cors',
+                  'sec-fetch-site': 'same-origin',
+                  'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                  'viewport-width': '902',
+                  'x-asbd-id': '129477',
+                  'x-csrftoken': 'Vs2FdCXlliqTProT7kg2ng',
+                  'x-fb-friendly-name': 'PolarisPostActionLoadPostQueryQuery',
+                  'x-fb-lsd': 'AVoydsUMKB4',
+                  'x-ig-app-id': '936619743392459', }
         if empty_session_only:
             del header['Host']
             del header['Origin']
@@ -202,7 +216,7 @@ class InstaloaderContext:
         session.headers.update(self._default_http_header(empty_session_only=True))
         # Override default timeout behavior.
         # Need to silence mypy bug for this. See: https://github.com/python/mypy/issues/2427
-        session.request = partial(session.request, timeout=self.request_timeout) # type: ignore
+        session.request = partial(session.request, timeout=self.request_timeout)  # type: ignore
         return session
 
     def save_session(self):
@@ -253,7 +267,7 @@ class InstaloaderContext:
         session.headers.update(self._default_http_header())
         # Override default timeout behavior.
         # Need to silence mypy bug for this. See: https://github.com/python/mypy/issues/2427
-        session.request = partial(session.request, timeout=self.request_timeout) # type: ignore
+        session.request = partial(session.request, timeout=self.request_timeout)  # type: ignore
 
         # Make a request to Instagram's root URL, which will set the session's csrftoken cookie
         # Not using self.get_json() here, because we need to access the cookie
@@ -385,7 +399,7 @@ class InstaloaderContext:
                 redirect_url = resp.headers['location']
                 self.log('\nHTTP redirect from https://{0}/{1} to {2}'.format(host, path, redirect_url))
                 if (redirect_url.startswith('https://www.instagram.com/accounts/login') or
-                    redirect_url.startswith('https://i.instagram.com/accounts/login')):
+                        redirect_url.startswith('https://i.instagram.com/accounts/login')):
                     if not self.is_logged_in:
                         raise LoginRequiredException("Redirected to login page. Use --login.")
                     raise AbortDownloadException("Redirected to login page. You've been logged out, please wait " +
@@ -461,7 +475,7 @@ class InstaloaderContext:
             variables_json = json.dumps(variables, separators=(',', ':'))
 
             if rhx_gis:
-                #self.log("rhx_gis {} query_hash {}".format(rhx_gis, query_hash))
+                # self.log("rhx_gis {} query_hash {}".format(rhx_gis, query_hash))
                 values = "{}:{}".format(rhx_gis, variables_json)
                 x_instagram_gis = hashlib.md5(values.encode()).hexdigest()
                 tmpsession.headers['x-instagram-gis'] = x_instagram_gis
@@ -531,10 +545,10 @@ class InstaloaderContext:
 
             # Extract key information from cookies if we haven't got it already from a previous request
             header_cookies_mapping = {'x-mid': 'mid',
-                                     'ig-u-ds-user-id': 'ds_user_id',
-                                     'x-ig-device-id': 'ig_did',
-                                     'x-ig-family-device-id': 'ig_did',
-                                     'family_device_id': 'ig_did'}
+                                      'ig-u-ds-user-id': 'ds_user_id',
+                                      'x-ig-device-id': 'ig_did',
+                                      'x-ig-family-device-id': 'ig_did',
+                                      'family_device_id': 'ig_did'}
 
             # Map the cookie value to the matching HTTP request header
             cookies = tempsession.cookies.get_dict().copy()
@@ -550,7 +564,7 @@ class InstaloaderContext:
             if 'rur' in cookies:
                 if 'ig-u-rur' not in tempsession.headers:
                     tempsession.headers['ig-u-rur'] = cookies['rur'].strip('\"').encode('utf-8') \
-                                                                    .decode('unicode_escape')
+                        .decode('unicode_escape')
                 else:
                     tempsession.cookies.pop('rur', None)
 
@@ -562,7 +576,7 @@ class InstaloaderContext:
             if 'authorization' in tempsession.headers:
                 tempsession.cookies.clear()
 
-            response_headers = dict()    # type: Dict[str, Any]
+            response_headers = dict()  # type: Dict[str, Any]
             response = self.get_json(path, params, 'i.instagram.com', tempsession, response_headers=response_headers)
 
             # Extract the ig-set-* headers and use them in the next request
