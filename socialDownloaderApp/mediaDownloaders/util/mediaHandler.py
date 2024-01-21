@@ -40,9 +40,8 @@ def downloadTempFile(url, name):
 def combineVideoAudio(videoPath, audioPath, videoName):
     try:
         tempPath = getTempPath(videoName)
-        ffmpegPath = os.path.join(os.path.dirname(__file__), 'ffmpeg.exe')
         command = [
-            ffmpegPath, '-i', videoPath, '-i', audioPath,
+            'ffmpeg', '-i', videoPath, '-i', audioPath,
             '-c:v', 'copy', '-c:a', 'aac', '-strict', 'experimental', '-q:v', '1', '-q:a', '1', tempPath
         ]
         subprocess.run(command, check=True)
