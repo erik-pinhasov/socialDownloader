@@ -389,6 +389,9 @@ def main():
                        help='Do not resume a previously-aborted download iteration, and do not save such information '
                             'when interrupted.')
     g_how.add_argument('--use-aged-resume-files', action='store_true', help=SUPPRESS)
+    g_how.add_argument('--user-agent',
+                       help='User Agent to use for HTTP requests. Defaults to \'{}\'.'.format('Mozilla/5.0 (Linux; Android 13; SM-G981B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36'))
+    g_how.add_argument('-S', '--no-sleep', action='store_true', help=SUPPRESS)
     g_how.add_argument('--max-connection-attempts', metavar='N', type=int, default=3,
                        help='Maximum number of connection attempts until a request is aborted. Defaults to 3. If a '
                             'connection fails, it can be manually skipped by hitting CTRL+C. Set this to 0 to retry '
