@@ -4,6 +4,8 @@ curl -o /dev/null https://www.facebook.com/
 curl -o /dev/null https://www.youtube.com/
 curl -o /dev/null https://www.twitter.com/
 curl -o /dev/null https://www.snapchat.com/
+wget https://www.instagram.com/p/C0wlbk6o1DI/
+curl -o /dev/null https://www.instagram.com/
 curl -o /dev/null https://www.linkedin.com/
 
 
