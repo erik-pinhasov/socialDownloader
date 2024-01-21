@@ -3,7 +3,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = ['socialdownloader-ofhs.onrender.com']
+ALLOWED_HOSTS = ['socialdownloader-tuhf.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.auth',
