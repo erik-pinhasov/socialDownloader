@@ -5,14 +5,13 @@ from socialDownloaderApp.mediaDownloaders.twitterDownloader import downloadTwitt
 from socialDownloaderApp.mediaDownloaders.linkedinDownloader import downloadLinkedinVideo
 from socialDownloaderApp.mediaDownloaders.snapchatDownloader import downloadSnapchatVideo
 
-
 PLATFORM_INFO = {
     "youtube": {
         "patterns": ["youtube.com", "youtu.be"],
         "downloader": downloadYoutubeVideo,
     },
     "facebook": {
-        "patterns": ["facebook.com", "fb.watch", "fb.me"],
+        "patterns": ["^facebook\.com", "^fb\.watch", "^fb\.me\/[\w-]+"],
         "downloader": downloadFacebookVideo,
     },
     "instagram": {
@@ -24,7 +23,7 @@ PLATFORM_INFO = {
         "downloader": downloadLinkedinVideo,
     },
     "twitter": {
-        "patterns": ["twitter.com", "t.co"],
+        "patterns": ["t\.co", "twitter\.com"],
         "downloader": downloadTwitterVideo,
     },
     "snapchat": {

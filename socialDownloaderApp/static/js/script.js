@@ -143,10 +143,10 @@ function enlargeLogo(logo) {
 function detectPlatform(url) {
     const patterns = {
         'youtube': /youtube\.com|youtu\.be/,
-        'facebook': /facebook\.com|fb\.watch|fb\.me\/[\w-]+/,
+        'facebook': /^(?:facebook\.com|fb\.watch|fb\.me\/[\w-]+)/,
         'instagram': /instagram\.com/,
         'linkedin': /linkedin\.com/,
-        'twitter': /twitter\.com|t\.co/,
+        'twitter': /^(?:t\.co|twitter\.com)/,
         'snapchat': /snapchat\.com/
     };
     return Object.keys(patterns).find(platform => patterns[platform].test(url)) || null;
