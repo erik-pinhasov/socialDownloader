@@ -1,3 +1,4 @@
+import requests
 from pytube import YouTube
 from socialDownloaderApp.mediaDownloaders.util.mediaHandler import downloadTempFile
 

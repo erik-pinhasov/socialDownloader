@@ -1,5 +1,6 @@
 Django~=5.0.1
 beautifulsoup4~=4.12.2
 requests~=2.31.0
-pytube~=15.0.0
 instaloader~=4.10.3
+django-debug-toolbar~=4.2.0
+pytube~=15.0.0
