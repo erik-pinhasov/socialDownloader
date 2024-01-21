@@ -1,6 +1,6 @@
 set -o errexit
 
-cp innertube.py /usr/lib/python3.8/site-packages/pytube/innertube.py
+cp innertube.py /.venv/lib/python3.8/site-packages/pytube/innertube.py
 
 pip install --upgrade pip
 pip install -r requirements.txt
