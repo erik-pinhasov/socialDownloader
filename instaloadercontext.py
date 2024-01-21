@@ -178,6 +178,7 @@ class InstaloaderContext:
         """Returns default HTTP header we use for requests."""
         header = {'authority': 'www.instagram.com',
                   'accept': '*/*',
+                  'content-length': '0',
                   'accept-language': 'en-US,en;q=0.9,he-IL;q=0.8,he;q=0.7',
                   'content-type': 'application/x-www-form-urlencoded',
                   'dpr': '1',
@@ -200,11 +201,6 @@ class InstaloaderContext:
                   'x-fb-friendly-name': 'PolarisPostActionLoadPostQueryQuery',
                   'x-fb-lsd': 'AVoydsUMKB4',
                   'x-ig-app-id': '936619743392459', }
-        if empty_session_only:
-            del header['Host']
-            del header['Origin']
-            del header['X-Instagram-AJAX']
-            del header['X-Requested-With']
         return header
 
     def get_anonymous_session(self) -> requests.Session:
