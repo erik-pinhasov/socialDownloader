@@ -24,8 +24,6 @@ def downloadMediaView(request):
         mediaUrl = request.POST.get('mediaUrl', '')
         downloader = detectPlatform(mediaUrl)
         filePath = downloader(mediaUrl)
-        print('filepath:')
-        print(filePath)
         if not filePath.lower().endswith('.mp4'):
             return JsonResponse({'error': 'File is not valid'}, status=400)
 
