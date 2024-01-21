@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-9$cuu5+s3r&2i%$rcq&20wb736!yq$7u5%kd71@*9n#s01dzn7'
 
-ALLOWED_HOSTS = ['https://socialdownloader-ofhs.onrender.com']
+ALLOWED_HOSTS = ['socialdownloader-ofhs.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.auth',
