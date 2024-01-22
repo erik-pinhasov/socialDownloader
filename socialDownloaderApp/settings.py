@@ -3,7 +3,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
-ALLOWED_HOSTS = ['83.229.85.164']
+ALLOWED_HOSTS = ['83.229.72.115', '172.16.0.1', 'localhost']
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.staticfiles',
@@ -12,7 +12,7 @@ INSTALLED_APPS = [
     'socialDownloaderApp',
 ]
 
-INTERNAL_IPS = ['0.0.0.0']
+INTERNAL_IPS = ['127.0.0.1']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,7 +56,7 @@ USE_TZ = True
 DEBUG = False
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
