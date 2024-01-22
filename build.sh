@@ -14,13 +14,14 @@ export DEBUG=False
 
 export SECRET_KEY='f9jc!0isofztwhdcap$l_cyq#1o9z^5n1j*b&d_5^k4k)=r!10' >> ~/.bashrc
 
-pip install --upgrade pip
-pip install -r requirements.txt
+sudo python3 pip install
+sudo pip install --upgrade pip
+sudo pip install -r requirements.txt
 
-cp innertube.py ~/socialDownloader/venv/lib/python3.10/site-packages/pytube/innertube.py
-cp instaloadercontext.py ~/socialDownloader/venv/lib/python3.10/site-packages/instaloader/instaloadercontext.py
+cp innertube.py root/socialDownloader/venv/lib/python3.8/site-packages/pytube/innertube.py
+cp instaloadercontext.py root/socialDownloader/venv/lib/python3.8/site-packages/instaloader/instaloadercontext.py
 
-python manage.py collectstatic --no-input
-python manage.py migrate
+python3 manage.py collectstatic --no-input
+python3 manage.py migrate
 
-chmod +x build.sh
+sudo chmod +x build.sh
