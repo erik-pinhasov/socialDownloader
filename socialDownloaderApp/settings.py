@@ -10,6 +10,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'socialDownloaderApp',
+    'django_extensions',
 ]
 
 INTERNAL_IPS = ['127.0.0.1']
