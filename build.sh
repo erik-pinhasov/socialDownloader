@@ -19,7 +19,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 cp innertube.py ~/project/src/.venv/lib/python3.11/site-packages/pytube/innertube.py
-cp innertube.py ~/project/src/.venv/lib/python3.11/site-packages/pytube/innertube.py
+cp instaloadercontext.py ~/project/src/.venv/lib/python3.11/site-packages/instaloader/instaloadercontext.py
 
 python manage.py collectstatic --no-input
 python manage.py migrate
