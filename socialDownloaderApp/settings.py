@@ -3,8 +3,8 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['83.229.85.164']
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-&psk#na5l=p3q8_a+-$4w1f^lt3lx1c@d*p4x$ymm_rn7pwb87')
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.staticfiles',
@@ -54,8 +54,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-DEBUG = False
-
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 STATIC_URL = '/static/'
 
 if not DEBUG:
