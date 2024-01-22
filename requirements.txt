@@ -1,4 +1,4 @@
-Django~=5.0.1
+Django~=4.2.9
 beautifulsoup4~=4.12.2
 requests~=2.31.0
 pytube~=15.0.0
