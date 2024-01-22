@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+SECRET_KEY = os.environ.get('SECRET_KEY')
 ALLOWED_HOSTS = ['83.229.85.164']
 INSTALLED_APPS = [
     'django.contrib.auth',
@@ -12,7 +12,7 @@ INSTALLED_APPS = [
     'socialDownloaderApp',
 ]
 
-INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = ['0.0.0.0']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,7 +58,7 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-TIME_ZONE = 'America/New_York'
+
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

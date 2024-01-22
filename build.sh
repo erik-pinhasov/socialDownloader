@@ -12,7 +12,7 @@ curl -o /dev/null https://www.linkedin.com/
 
 export DEBUG=False
 
-export SECRET_KEY='o_8*c^dvnw-w8)=na6x2-zi_&!bur=b3r3@mi8j=u1(-5drdw5'
+export SECRET_KEY='f9jc!0isofztwhdcap$l_cyq#1o9z^5n1j*b&d_5^k4k)=r!10' >> ~/.bashrc
 
 pip install --upgrade pip
 pip install -r requirements.txt
@@ -22,3 +22,5 @@ cp instaloadercontext.py ~/socialDownloader/venv/lib/python3.10/site-packages/in
 
 python manage.py collectstatic --no-input
 python manage.py migrate
+
+chmod +x build.sh
