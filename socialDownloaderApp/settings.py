@@ -4,7 +4,6 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ALLOWED_HOSTS = ['83.229.85.164']
-SECRET_KEY = 'o_8*c^dvnw-w8)=na6x2-zi_&!bur=b3r3@mi8j=u1(-5drdw5'
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.staticfiles',
@@ -57,9 +56,8 @@ USE_TZ = True
 DEBUG = False
 STATIC_URL = '/static/'
 
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 TIME_ZONE = 'America/New_York'
 
 SESSION_COOKIE_SECURE = True
