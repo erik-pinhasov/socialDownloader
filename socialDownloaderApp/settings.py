@@ -1,8 +1,18 @@
 from pathlib import Path
 import os
+import dj_database_url
 
+DEBUG = False
+
+DATABASES = {}
+
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=500,
+        conn_health_checks=True,
+    )
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '&psk#na5l=p3q8_a+-$4w1f^lt3lx1c@d*p4x$ymm_rn7pwb87')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['83.229.72.115', 'ht83-229-72-115.cloud-xip.com', '127.0.0.1', 'localhost']
@@ -48,12 +58,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'socialDownloaderApp.wsgi.application'
 
-DATABASES = {}
-
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-DEBUG = False
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # The URL to use when referring to static files (where they will be served from)
