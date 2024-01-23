@@ -15,9 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['83.229.72.115', 'ht83-229-72-115.cloud-xip.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['socialdownloader-kwtk.onrender.com', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['http://83.229.72.115', 'http://83-229-72-115.cloud-xip.com']
 
 INSTALLED_APPS = [
     'django.contrib.auth',
@@ -63,7 +62,6 @@ USE_I18N = True
 USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# The URL to use when referring to static files (where they will be served from)
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
