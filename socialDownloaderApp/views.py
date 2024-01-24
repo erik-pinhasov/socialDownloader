@@ -1,14 +1,12 @@
 from django.http import FileResponse
 from django.shortcuts import render, redirect
-from django.urls import reverse
-
-from socialDownloaderApp.mediaDownloaders.util.mediaHandler import formatVideoName
 from socialDownloaderApp.mediaDownloaders.util.platformDetector import detectPlatform, PLATFORM_INFO
 from django.http import JsonResponse
 import os
 
 
 class CleanUpFileResponse(FileResponse):
+    # CleanUpFileResponse class for handling FileResponse and remove temp path on close
     def __init__(self, *args, file_path, **kwargs):
         super().__init__(*args, **kwargs)
         self.file_path = file_path
@@ -20,6 +18,7 @@ class CleanUpFileResponse(FileResponse):
 
 
 def downloadMediaView(request):
+    # View func for downloading media from social media
     try:
         mediaUrl = request.POST.get('mediaUrl', '')
         downloader = detectPlatform(mediaUrl)

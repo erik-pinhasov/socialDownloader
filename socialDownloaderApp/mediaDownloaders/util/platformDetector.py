@@ -5,6 +5,8 @@ from socialDownloaderApp.mediaDownloaders.twitterDownloader import downloadTwitt
 from socialDownloaderApp.mediaDownloaders.linkedinDownloader import downloadLinkedinVideo
 from socialDownloaderApp.mediaDownloaders.snapchatDownloader import downloadSnapchatVideo
 
+# Defines a mapping between social media platforms and their corresponding URL patterns and downloader functions, and
+# provides a function to detect the platform of a given URL and return the appropriate downloader function.
 
 PLATFORM_INFO = {
     "youtube": {

@@ -1,3 +1,6 @@
+# Settings for header, cookies and params sent with get requests from social media
+# for not getting blocked by website bot detector.
+
 WIN_AGENT = "(Windows NT 10.0; Win64; x64)"
 
 LINUX_AGENT = "(X11; Linux x86_64)"

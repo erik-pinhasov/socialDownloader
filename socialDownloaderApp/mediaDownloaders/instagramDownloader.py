@@ -4,6 +4,8 @@ from socialDownloaderApp.mediaDownloaders.util.mediaHandler import formatVideoNa
 
 
 def downloadInstagramVideo(url):
+    # Handles the download of an Instagram video by extracting the media shortcode from the provided URL, fetching the
+    # video details using Instaloader, and saving the video file with an appropriately formatted name.
     try:
         insLoader = instaloader.Instaloader()
         media = instaloader.Post.from_shortcode(insLoader.context, url.split("/")[-2])

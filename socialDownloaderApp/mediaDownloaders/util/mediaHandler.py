@@ -9,6 +9,7 @@ from socialDownloaderApp.mediaDownloaders.util.requestHeaders import USER_AGENT
 
 
 def getStreamRequest(url, params=None, cookies=None, headers=None):
+    # Fetches content from a URL with optional parameters, cookies, and headers, handling any exceptions.
     try:
         if not headers:
             headers = {'user-agent': USER_AGENT}
@@ -20,12 +21,14 @@ def getStreamRequest(url, params=None, cookies=None, headers=None):
 
 
 def getTempPath(name):
+    # Generates a temporary file path for storing a downloaded file, defaulting to 'video.mp4' if no name is provided.
     tempDir = tempfile.gettempdir()
     name = name if name else 'video'
     return os.path.join(tempDir, f"{name}.mp4")
 
 
 def downloadTempFile(url, name):
+    # Downloads a file from a URL and saves it to a temporary location, returning the path to the downloaded file.
     try:
         response = requests.get(url)
         tempPath = getTempPath(name)
@@ -38,6 +41,7 @@ def downloadTempFile(url, name):
 
 
 def combineVideoAudio(videoPath, audioPath, videoName):
+    # Merges video and audio files into a single file using FFmpeg, and cleans up temporary files.
     try:
         tempPath = getTempPath(videoName)
         ffmpegPath = os.path.join(os.path.dirname(__file__), 'ffmpeg.exe')
@@ -60,25 +64,30 @@ def getBeautifulSoup(content):
 
 
 def getMaxResolution(objects, tag):
+    # Finds and returns the object with the maximum value for a specified attribute from a list of objects.
     return max(objects, key=lambda x: int(x.get(tag, 0)), default=None)
 
 
 def extractTextPattern(url, pattern):
+    # Extracts and returns a specific pattern from a given text using regular expressions.
     match = re.search(pattern, url)
     return match.group(1) if match else None
 
 
 def formatVideoName(name):
+    # Formats and sanitizes a string to create a suitable name for a video file.
     firstLine = name.splitlines()[0]
     return "".join(x if x.isalnum() or x in (" ", ".", "-") else "" for x in firstLine)
 
 
 def findVideoName(content, platform):
+    # Extracts and formats the video name from the provided content's meta description.
     metaTag = content.find('meta', attrs={'name': 'description'})
     return formatVideoName(metaTag.get('content')) if metaTag else platform + 'Video'
 
 
 def getScriptJson(url, scriptType):
+    # Fetches and parses a JSON script of a specified type from a given URL's page content.
     streamContent = getStreamRequest(url)
     soup = getBeautifulSoup(streamContent)
     scriptTag = soup.find('script', type=scriptType)
