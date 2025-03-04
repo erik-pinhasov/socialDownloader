@@ -3,8 +3,6 @@
 Social Media Video Downloader app for downloading social media videos with it link.
 The app downloads automatically the highest resolution video.
 Note: Designed for personal use, respecting platform terms and content creators.
-* Try this App now: https://socialdownloader-kwtk.onrender.com/
-Deployed on free tier server - may cause low website loading.
 
 ## Features
 
